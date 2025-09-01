@@ -1,14 +1,14 @@
 package utils;
 
-import Model.Student;
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 @Slf4j
-public final class HibernateUtil {
-
+@UtilityClass
+public  class HibernateUtil {
     @Getter
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
@@ -16,15 +16,14 @@ public final class HibernateUtil {
         try {
             log.debug("Building Hibernate SessionFactory");
 
-            return new Configuration().configure().addAnnotatedClass(Student.class).buildSessionFactory();
-        } catch (Throwable ex) {
-           log.error(ex.getMessage(), ex);
-            throw new ExceptionInInitializerError(ex);
+            return new Configuration().configure().buildSessionFactory();
+        } catch (Exception e) {
+           log.error(e.getMessage(), e);
+            throw new ExceptionInInitializerError(e);
         }
     }
     public static void shutdown() {
         getSessionFactory().close();
     }
 
-    private HibernateUtil() {}
 }

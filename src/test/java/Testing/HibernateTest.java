@@ -11,7 +11,6 @@ public class HibernateTest {
         @Cleanup var sessionFactory = HibernateUtil.getSessionFactory();
         @Cleanup var session = sessionFactory.openSession();
         session.beginTransaction();
-
         session.getTransaction().commit();
 
     }
