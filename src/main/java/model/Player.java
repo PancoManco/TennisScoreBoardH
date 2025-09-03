@@ -6,12 +6,13 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Getter
 @Setter
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "players", schema = "public")
 public class Player {
     @Id
@@ -20,6 +21,5 @@ public class Player {
 
     @Column(unique = true, nullable = false)
     private String name;
-
 
 }

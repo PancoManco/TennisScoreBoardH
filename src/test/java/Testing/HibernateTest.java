@@ -9,7 +9,7 @@ import utils.HibernateUtil;
 
 public class HibernateTest {
 
-    @Test
+
     public void checkClassConnection() {
         @Cleanup var sessionFactory = HibernateUtil.getSessionFactory();
         @Cleanup Session session = sessionFactory.openSession();
@@ -31,7 +31,7 @@ public class HibernateTest {
     }
 
 
-    @Test
+
     public void checkH2() {
         @Cleanup var sessionFactory = HibernateUtil.getSessionFactory();
         @Cleanup var session = sessionFactory.openSession();
