@@ -1,8 +1,10 @@
 package utils;
 
 import lombok.experimental.UtilityClass;
+import model.Match;
 
 import java.security.InvalidParameterException;
+import java.util.UUID;
 
 import static exception.ErrorMessages.*;
 
@@ -21,7 +23,6 @@ public class RequestParameterUtil {
         if (parameter1.length() > 20 || parameter2.length() > 20) {
             throw new InvalidParameterException(PLAYERS_NAMES_LENGTH);
         }
-
     }
 
 
