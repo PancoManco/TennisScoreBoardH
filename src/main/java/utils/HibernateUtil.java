@@ -32,4 +32,7 @@ public class HibernateUtil {
         getSessionFactory().close();
     }
 
+    public static void initDatabase() {
+
+    }
 }

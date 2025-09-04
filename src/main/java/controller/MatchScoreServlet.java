@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Match;
+import service.FinishedMatchesPersistenceService;
 import service.MatchScoreCalculationService;
 import service.OngoingMatchesService;
 
@@ -19,7 +20,7 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
-        Match match = ongoingMatchesService.getMatch(uuid).get();
+        Match match = ongoingMatchesService.getMatch(uuid);
 
         req.setAttribute("match", match);
         req.setAttribute("uuid", uuid);
@@ -31,8 +32,11 @@ public class MatchScoreServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         String player = req.getParameter("player");
+        Match match = ongoingMatchesService.getMatch(uuid);
+        scoreService.updatePoints(match, player);
 
-        Match match = ongoingMatchesService.getMatch(uuid).get();
+       // FinishedMatchesPersistenceService.persist(match); с проверка на победителя
 
+        resp.sendRedirect("/match-score" + "?uuid=" + uuid);
     }
 }

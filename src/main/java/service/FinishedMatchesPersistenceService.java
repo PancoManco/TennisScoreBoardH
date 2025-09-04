@@ -3,12 +3,10 @@ package service;
 import dao.Impl.MatchDao;
 import model.Match;
 
-import java.util.List;
-
 public class FinishedMatchesPersistenceService {
     private final MatchDao matchDao = MatchDao.getInstance();
 
-    public void persistMatches(Match match) {
+    public void persistMatch(Match match) {
         matchDao.save(match);
     }
 

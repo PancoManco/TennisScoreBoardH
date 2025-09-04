@@ -12,4 +12,6 @@ public class ErrorMessages {
     public static final String ERROR_FINDING_BY_NAME = "Ошибка при поиске игрока по имени в базе данных";
     public static final String ERROR_SAVING_PLAYER = "Ошибка при сохранение игрока в базу данных";
     public static final String ERROR_SAVING_MATCH = "Ошибка при сохранения матча в базу данных";
+
+    public static final String MATCH_NOT_FOUND = "Матч не найден по UUID";
 }

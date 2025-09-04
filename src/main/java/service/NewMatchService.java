@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public class NewMatchService {
     private final IPlayerDao playerDao = PlayerDao.getInstance();
+
     public Match createNewMatch(String playerName1, String playerName2) {
         Optional<Player> playerOneOpt = playerDao.findByName(playerName1);
         Optional<Player> playerTwoOpt = playerDao.findByName(playerName2);
