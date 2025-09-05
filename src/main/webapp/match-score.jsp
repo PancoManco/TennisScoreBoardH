@@ -1,6 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -11,34 +10,39 @@
 <div class="container">
     <h1>Счёт матча</h1>
     <table class="score-table">
+        <thead>
         <tr>
             <th>Игрок</th>
-            <th>Очки</th>
-            <th>Геймы</th>
             <th>Сеты</th>
+            <th>Геймы</th>
+            <th>Очки</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="currentSet" value="${matchScore.getCurrentSet()}"/>
+        <tr>
+            <td>${matchScore.getPlayer1().getName()}</td>
+            <td>${matchScore.getSetsWonPlayer1()}</td>
+            <td>${matchScore.getCurrentSet().getGames(matchScore.getPlayer1())}</td>
+            <td>${matchScore.getCurrentSet().getCurrentGameScore(matchScore.getPlayer1())}</td>
         </tr>
         <tr>
-            <td>${match.player1.name}</td>
-            <td>${match.points[0] == 41 ? 'Больше' : match.points[0]}</td>
-            <td>${match.games[0]}</td>
-            <td>${match.sets[0]}</td>
+            <td>${matchScore.getPlayer2().getName()}</td>
+            <td>${matchScore.getSetsWonPlayer2()}</td>
+            <td>${matchScore.getCurrentSet().getGames(matchScore.getPlayer2())}</td>
+            <td>${matchScore.getCurrentSet().getCurrentGameScore(matchScore.getPlayer2())}</td>
         </tr>
-        <tr>
-            <td>${match.player2.name}</td>
-            <td>${match.points[1] == 41 ? 'Больше' : match.points[1]}</td>
-            <td>${match.games[1]}</td>
-            <td>${match.sets[1]}</td>
-        </tr>
+        </tbody>
     </table>
 
-    <c:if test="${match.tieBreak}">
-        <p><strong>Тай-брейк!</strong></p>
+    <c:if test="${matchScore.isMatchOver()}">
+        <p><strong>Матч завершен!</strong></p>
     </c:if>
 
-    <form action="${pageContext.request.contextPath}/match-score" method="post">
+    <form action="${pageContext.request.contextPath}/match-score?uuid=${uuid}" method="post">
         <input type="hidden" name="uuid" value="${param.uuid}">
-        <button type="submit" name="winnerId" value="1">Игрок 1 выиграл очко</button>
-        <button type="submit" name="winnerId" value="2">Игрок 2 выиграл очко</button>
+        <button type="submit" name="winnerId" value=${matchScore.getPlayer1().getName()}>Игрок 1 выиграл очко</button>
+        <button type="submit" name="winnerId" value=${matchScore.getPlayer2().getName()}>Игрок 2 выиграл очко</button>
     </form>
 
     <a href="${pageContext.request.contextPath}/">← На главную</a>

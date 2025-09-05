@@ -14,7 +14,7 @@ import static exception.ErrorMessages.MATCH_NOT_FOUND;
 
 public class OngoingMatchesService {
 
-    private final Map<UUID, Match> ongoingMatches = new ConcurrentHashMap<>();
+    private final static Map<UUID, Match> ongoingMatches = new ConcurrentHashMap<>();
 
     public UUID add(Match match) {
         UUID uuid = UUID.randomUUID();

@@ -23,7 +23,7 @@ public class NewMatchService {
             playerTwo = Player.builder().name(playerName2).build();
             playerDao.save(playerTwo);
         } else playerTwo = playerTwoOpt.get();
-        return  Match.builder().player1(playerOne).player2(playerTwo).build();
+        return  new Match(playerOne, playerTwo);
 
     }
 }

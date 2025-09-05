@@ -1,4 +1,54 @@
 package model;
 
 public class SetScore {
+    private int gamesPlayer1 = 0;
+    private int gamesPlayer2 = 0;
+
+    private final Player player1;
+    private final Player player2;
+
+    private GameScore currentGame;
+    private TieBreakGame tieBreakGame;
+
+    public SetScore(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.currentGame = new GameScore(player1, player2);
+    }
+
+    public void playPoint(Player scorer, Player opponent) {
+        if (isTieBreak()) {
+            if (tieBreakGame == null) tieBreakGame = new TieBreakGame(player1, player2);
+            tieBreakGame.playPoint(scorer);
+            if (tieBreakGame.isGameOver()) {
+                if (scorer == player1) gamesPlayer1++;
+                else gamesPlayer2++;
+            }
+        } else {
+            currentGame.playPoint(scorer, opponent);
+            if (currentGame.isGameOver()) {
+                if (scorer == player1) gamesPlayer1++;
+                else gamesPlayer2++;
+                currentGame = new GameScore(player1, player2);
+            }
+        }
+    }
+
+    public boolean isSetOver() {
+        return (gamesPlayer1 >= 6 || gamesPlayer2 >= 6) &&
+               Math.abs(gamesPlayer1 - gamesPlayer2) >= 2 || (gamesPlayer1 == 7 || gamesPlayer2 == 7);
+    }
+
+    private boolean isTieBreak() {
+        return gamesPlayer1 == 6 && gamesPlayer2 == 6;
+    }
+
+    public int getGames(Player player) {
+        return player == player1 ? gamesPlayer1 : gamesPlayer2;
+    }
+
+    public String getCurrentGameScore(Player player) {
+        if (tieBreakGame != null) return tieBreakGame.getScore(player);
+        return currentGame.getScore(player);
+    }
 }
