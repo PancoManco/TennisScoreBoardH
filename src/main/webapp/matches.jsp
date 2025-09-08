@@ -1,60 +1,127 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Завершённые матчи</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <title>Матчи</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/matches.css">
+    <style><%@ include file="/css/matches.css"%></style>
 </head>
 <body>
-<div class="container">
-    <h1>Завершённые матчи</h1>
-    <form method="get" action="${pageContext.request.contextPath}/matches">
-        <div class="form-group">
-            <label for="filter">Поиск по имени игрока:</label>
-            <input type="text" id="filter" name="filter_by_player_name" value="${param.filter_by_player_name}">
-            <button type="submit">Искать</button>
-        </div>
-    </form>
 
+<h2>Список матчей</h2>
+
+<!-- Форма фильтрации -->
+<form class="filter-form" method="get" action="matches">
+    <input type="text" name="filter_by_player_name" placeholder="Фильтр по имени игрока" value="${filterName != null ? filterName : ''}" />
+    <button type="submit">Фильтровать</button>
+</form>
+
+<!-- Таблица матчей -->
+<table>
+    <thead>
+    <tr>
+        <th>Игрок 1</th>
+        <th>Игрок 2</th>
+        <th>Победитель</th>
+    </tr>
+    </thead>
+    <tbody>
     <c:choose>
-        <c:when test="${empty matches}">
-            <p>Матчи не найдены.</p>
+        <c:when test="${not empty matches}">
+            <c:forEach var="match" items="${matches}">
+                <tr>
+                    <td>${match.player1.name}</td>
+                    <td>${match.player2.name}</td>
+                    <td><c:choose>
+                        <c:when test="${not empty match.winner}">
+                            ${match.winner.name}
+                        </c:when>
+                        <c:otherwise>
+                            —
+                        </c:otherwise>
+                    </c:choose>
+                    </td>
+                </tr>
+            </c:forEach>
         </c:when>
         <c:otherwise>
-            <ul class="matches-list">
-                <c:forEach var="match" items="${matches}">
-                    <li>
-                            ${match.getPlayer1().getName()} vs ${match.getPlayer2().getName()} —
-                        Победитель: ${match.getWinner().getName()}
-                    </li>
-                </c:forEach>
-            </ul>
-
-            <!-- Пагинация -->
-            <div class="pagination">
-                <c:if test="${requestScope.pageNumber != 1 && empty requestScope.filterName}">
-                    <a class="prev" href="${pageContext.request.contextPath}/matches?page=${ requestScope.pageNumber - 1}"> < </a>
-
-                </c:if>
-                <c:if test="${requestScope.pageNumber != 1 && not empty requestScope.filterName}">
-                    <a class="prev" href="${pageContext.request.contextPath}/matches?page=${ requestScope.pageNumber - 1}&filter_by_player_name=${requestScope.filterName}"> < </a>
-                </c:if>
-
-                <c:if test="${requestScope.matches.size() == requestScope.pageSize && empty requestScope.filterName}">
-                    <a class="next" href="${pageContext.request.contextPath}/matches?page=${requestScope.pageNumber >= requestScope.amountPages ? requestScope.amountPages : requestScope.pageNumber + 1}"> > </a>
-
-                </c:if>
-                <c:if test="${requestScope.matches.size() == requestScope.pageSize && not empty requestScope.filterName}">
-                    <a class="next" href="${pageContext.request.contextPath}/matches?page=${requestScope.pageNumber >= requestScope.amountPages ? requestScope.amountPages : requestScope.pageNumber + 1}&filter_by_player_name=${requestScope.filterName}"> > </a>
-                </c:if>
-
-            </div>
+            <tr>
+                <td colspan="3">Матчи не найдены</td>
+            </tr>
         </c:otherwise>
     </c:choose>
+    </tbody>
+</table>
 
-    <a href="${pageContext.request.contextPath}/">← На главную</a>
+<c:set var="maxSideLinks" value="2" />
+<c:set var="totalPages" value="${totalPages}" />
+<c:set var="currentPage" value="${pageNumber}" />
+
+<c:set var="startPage" value="${currentPage - maxSideLinks}" />
+<c:set var="endPage" value="${currentPage + maxSideLinks}" />
+
+<!-- Если startPage < 1, сдвигаем диапазон вправо -->
+<c:if test="${startPage < 1}">
+    <c:set var="endPage" value="${endPage + (1 - startPage)}" />
+    <c:set var="startPage" value="1" />
+</c:if>
+
+<!-- Если endPage > totalPages, сдвигаем диапазон влево -->
+<c:if test="${endPage > totalPages}">
+    <c:set var="startPage" value="${startPage - (endPage - totalPages)}" />
+    <c:set var="endPage" value="${totalPages}" />
+</c:if>
+
+<!-- Коррекция на случай, если startPage стал меньше 1 после сдвига -->
+<c:if test="${startPage < 1}">
+    <c:set var="startPage" value="1" />
+</c:if>
+
+<div class="pagination" style="margin-top: 20px;">
+    <c:if test="${currentPage > 1}">
+        <a href="matches?page=${currentPage - 1}&filter_by_player_name=${filterName}">← Назад</a>
+    </c:if>
+
+    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+        <c:choose>
+            <c:when test="${i == currentPage}">
+                <strong>${i}</strong>
+            </c:when>
+            <c:otherwise>
+                <a href="matches?page=${i}&filter_by_player_name=${filterName}">${i}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+
+    <c:if test="${currentPage < totalPages}">
+        <a href="matches?page=${currentPage + 1}&filter_by_player_name=${filterName}">Вперёд →</a>
+    </c:if>
+
+    <!-- Форма для ввода номера страницы -->
+    <form action="matches" method="get" style="display: inline-block; margin-left: 15px;">
+        <input
+                type="number"
+                name="page"
+                min="1"
+                max="${totalPages}"
+                value="${currentPage}"
+                style="width: 50px; padding: 3px;"
+                required
+        />
+        <input
+                type="hidden"
+                name="filter_by_player_name"
+                value="${filterName != null ? filterName : ''}"
+        />
+        <button type="submit" style="padding: 4px 8px;">Перейти</button>
+    </form>
 </div>
+<div style="text-align: center; margin-top: 20px;">
+    <a href="${pageContext.request.contextPath}/" class="btn-mainpage">
+        На главную
+    </a>
+</div>
+
 </body>
 </html>

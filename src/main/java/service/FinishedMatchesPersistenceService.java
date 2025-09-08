@@ -19,4 +19,11 @@ public class FinishedMatchesPersistenceService {
         }
         return matchDao.findByPlayerNamePaginated(offset, pageSize, playerName);
    }
+
+    public long getFinishedMatchesCount(String playerName) {
+        if (playerName == null || playerName.trim().isEmpty()) {
+            return matchDao.countAll();
+        }
+        return matchDao.countByPlayerName(playerName);
+    }
 }

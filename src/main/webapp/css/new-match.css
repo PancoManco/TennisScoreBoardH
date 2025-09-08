@@ -1,0 +1,126 @@
+/* Общие стили */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #d0f0c0 0%, #a2d149 100%);
+    color: #2d4a25;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #f0f9e8;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(34, 49, 25, 0.3);
+    padding: 30px 40px;
+    text-align: center;
+}
+
+/* Заголовок */
+h1 {
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    color: #3a6a1c;
+    text-shadow: 1px 1px 1px #9fcf5f;
+}
+
+/* Форма */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Группа полей */
+.form-group {
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #3a6a1c;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #a2d149;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #2d4a25;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 8px #4caf50;
+}
+
+/* Кнопка */
+button[type="submit"] {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 14px 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.5);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+    background: #3a8e1c;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 10px rgba(35, 105, 32, 0.7);
+}
+
+/* Сообщение об ошибке */
+div[style*="color: red"] {
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Ссылка "На главную" */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #4caf50;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover,
+a:focus {
+    color: #3a8e1c;
+    text-decoration: underline;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .form-group {
+        max-width: 100%;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 14px 0;
+    }
+}

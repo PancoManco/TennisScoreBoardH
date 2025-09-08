@@ -1,15 +1,17 @@
-<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Счёт матча</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/match-score.css">
+    <style><%@ include file="/css/match-score.css"%></style>
 </head>
 <body>
 <div class="container">
     <h1>Счёт матча</h1>
+
     <table class="score-table">
         <thead>
         <tr>
@@ -35,20 +37,25 @@
         </tr>
         </tbody>
     </table>
+
     <c:if test="${requestScope.matchScore.isMatchOver() and not empty requestScope.matchScore.getWinner()}">
-        <h1><strong>Матч завершён!</strong></h1>
-        <h2>Победитель матча: ${requestScope.matchScore.winner}</h2>
+        <h2>Матч завершён!</h2>
+        <h2>🏆 Победитель: ${requestScope.matchScore.winner}</h2>
     </c:if>
 
-
-    <form action="${pageContext.request.contextPath}/match-score?uuid=${uuid}" method="post">
-        <input type="hidden" name="uuid" value="${param.uuid}">
-        <button type="submit" name="winnerId" value=${matchScore.getPlayer1().getName()}>Игрок ${matchScore.getPlayer1().getName()} выиграл очко</button>
-        <button type="submit" name="winnerId" value=${matchScore.getPlayer2().getName()}>Игрок ${matchScore.getPlayer2().getName()} выиграл очко</button>
-    </form>
+    <c:if test="${not matchScore.isMatchOver()}">
+        <form action="${pageContext.request.contextPath}/match-score?uuid=${uuid}" method="post">
+            <input type="hidden" name="uuid" value="${param.uuid}">
+            <button type="submit" name="winnerId" value="${matchScore.getPlayer1().getName()}">
+                Игрок ${matchScore.getPlayer1().getName()} выиграл очко
+            </button>
+            <button type="submit" name="winnerId" value="${matchScore.getPlayer2().getName()}">
+                Игрок ${matchScore.getPlayer2().getName()} выиграл очко
+            </button>
+        </form>
+    </c:if>
 
     <a href="${pageContext.request.contextPath}/">← На главную</a>
 </div>
-
 </body>
 </html>

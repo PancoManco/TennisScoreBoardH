@@ -1,0 +1,215 @@
+/* Общие стили */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #d0f0c0 0%, #a2d149 100%);
+    color: #2d4a25;
+    margin: 0;
+    padding: 20px;
+}
+
+h2 {
+    color: #3a6a1c;
+    text-shadow: 1px 1px 1px #9fcf5f;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Фильтр */
+form.filter-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form.filter-form input[type="text"] {
+    padding: 8px 12px;
+    width: 250px;
+    border: 2px solid #a2d149;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #2d4a25;
+    transition: border-color 0.3s ease;
+}
+
+form.filter-form input[type="text"]:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 8px #4caf50;
+}
+
+form.filter-form button {
+    padding: 8px 16px;
+    margin-left: 8px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.5);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form.filter-form button:hover,
+form.filter-form button:focus {
+    background-color: #3a8e1c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(35, 105, 32, 0.7);
+}
+
+/* Таблица */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+    background-color: #f0f9e8;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(34, 49, 25, 0.2);
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #a2d149;
+    color: #2d4a25;
+    font-weight: 600;
+}
+
+th {
+    background-color: #a2d149;
+    color: #fff;
+    text-shadow: 1px 1px 1px #789a1f;
+}
+
+tbody tr:hover {
+    background-color: #d0f0c0;
+}
+
+/* Сообщение о пустом списке */
+tbody tr td[colspan="3"] {
+    text-align: center;
+    font-style: italic;
+    color: #557a24;
+}
+
+/* Пагинация */
+.pagination {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.pagination a,
+.pagination strong {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 4px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 3px 6px rgba(46, 125, 50, 0.3);
+}
+
+.pagination a {
+    border: 1px solid #a2d149;
+    color: #2d4a25;
+    background-color: #f0f9e8;
+}
+
+.pagination a:hover,
+.pagination a:focus {
+    background-color: #4caf50;
+    color: #fff;
+    box-shadow: 0 6px 10px rgba(35, 105, 32, 0.7);
+}
+
+.pagination strong {
+    border: 1px solid #3a6a1c;
+    background-color: #a2d149;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(34, 49, 25, 0.7);
+}
+
+/* Форма ввода страницы */
+.pagination form {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.pagination form input[type="number"] {
+    width: 60px;
+    padding: 6px 8px;
+    border: 2px solid #a2d149;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #2d4a25;
+    transition: border-color 0.3s ease;
+}
+
+.pagination form input[type="number"]:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 8px #4caf50;
+}
+
+.pagination form button {
+    padding: 6px 14px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.5);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination form button:hover,
+.pagination form button:focus {
+    background-color: #3a8e1c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(35, 105, 32, 0.7);
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    form.filter-form input[type="text"] {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .pagination form input[type="number"] {
+        width: 50px;
+    }
+}
+.btn-mainpage {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.5);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-mainpage:hover,
+.btn-mainpage:focus {
+    background-color: #3a8e1c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(35, 105, 32, 0.7);
+}
+

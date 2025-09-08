@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Новый матч</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+    <style><%@ include file="/css/new-match.css"%></style>
 </head>
 <body>
 <div class="container">

@@ -25,18 +25,20 @@ public class FinishedMatchesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = req.getParameter("page");
-
+        String playerName = req.getParameter("filter_by_player_name");
         int pageNumber;
         try {
-            pageNumber = (page == null) ? 1 : Integer.parseInt(page);
+            pageNumber = (page == null || page.isEmpty()) ? 1 : Integer.parseInt(page);
         } catch (NumberFormatException exception) {
-            throw new InvalidParameterException("Empty page");
+            pageNumber = 1; // или можно показать ошибку пользователю, но не выбрасывать исключение
         }
-        String playerName = req.getParameter("filter_by_player_name");
-        List<Match> finishedMatches = finishedMatchesPersistenceService.getFinishedMatches(pageNumber, playerName, PAGE_SIZE_BY_DEFAULT);
+
         List<Match> matches = finishedMatchesPersistenceService.getFinishedMatches(pageNumber, playerName, PAGE_SIZE_BY_DEFAULT);
-        req.setAttribute("matches", finishedMatches);
+        long totalMatches = finishedMatchesPersistenceService.getFinishedMatchesCount(playerName);
+        int totalPages = (int) Math.ceil((double) totalMatches / PAGE_SIZE_BY_DEFAULT);
+        req.setAttribute("matches", matches);
         req.setAttribute("pageNumber", pageNumber);
+        req.setAttribute("totalPages", totalPages);
         req.setAttribute("filterName", playerName);
         req.setAttribute("pageSize", PAGE_SIZE_BY_DEFAULT);
         req.getRequestDispatcher("/matches.jsp").forward(req, resp);

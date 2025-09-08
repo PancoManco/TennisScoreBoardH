@@ -60,7 +60,28 @@ public class MatchDao  implements IMatchDao {
         } catch (HibernateException exception) {
             throw new DataBaseException("Database error");
         }
-
-
     }
+
+    public long countAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("SELECT COUNT(m) FROM Match m", Long.class)
+                    .uniqueResult();
+        } catch (HibernateException e) {
+            throw new DataBaseException("Error counting all matches");
+        }
+    }
+    public long countByPlayerName(String playerName) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String nameForQuery = "%" + playerName + "%";
+            return session.createQuery(
+                            "SELECT COUNT(m) FROM Match m WHERE m.player1.name ILIKE :name OR m.player2.name ILIKE :name",
+                            Long.class)
+                    .setParameter("name", nameForQuery)
+                    .uniqueResult();
+        } catch (HibernateException e) {
+            throw new DataBaseException("Error counting matches by player name");
+        }
+    }
+
+
 }

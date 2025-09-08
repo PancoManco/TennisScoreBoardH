@@ -21,7 +21,7 @@
     <property name="hibernate.hikari.dataSourceClassName">org.postgresql.ds.PGSimpleDataSource</property>
     <property name="hikari.dataSource.url">jdbc:postgresql://localhost:5432/postgres</property>
     <property name="hikari.dataSource.user">postgres</property>
-    <property name="hikari.dataSource.password">root</property>
+    <property name="hikari.dataSource.password">return5498</property>
 
     <!--
     <property name="connection.driver_class">org.postgresql.Driver</property>
