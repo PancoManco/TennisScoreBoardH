@@ -3,6 +3,7 @@ package service;
 import dao.IPlayerDao;
 import dao.Impl.PlayerDao;
 import model.Match;
+import model.MatchScore;
 import model.Player;
 
 import java.util.Optional;
@@ -23,7 +24,10 @@ public class NewMatchService {
             playerTwo = Player.builder().name(playerName2).build();
             playerDao.save(playerTwo);
         } else playerTwo = playerTwoOpt.get();
-        return  new Match(playerOne, playerTwo);
-
+        return  Match.builder()
+                .player1(playerOne)
+                .player2(playerTwo)
+                .matchScore(new MatchScore(playerOne, playerTwo))
+                .build();
     }
 }

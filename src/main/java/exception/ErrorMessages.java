@@ -15,4 +15,5 @@ public class ErrorMessages {
 
     public static final String MATCH_NOT_FOUND = "Матч не найден по UUID";
     public static final String SERIALIZATION_ERROR_MESSAGE = "Ошибка при сериализации объекта в JSON.";
+    public static final String ERROR_FINDING_ALL_MATCHES = "Ошибка при получения списка всех матчей из базы данных";
 }

@@ -10,16 +10,23 @@ import java.util.List;
 public class MatchScore {
     private final Player player1;
     private final Player player2;
+
+    public MatchScore(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+        sets.add(new SetScore(player1, player2));
+    }
+
     private final List<SetScore> sets = new ArrayList<>();
     private int setsWonPlayer1 = 0;
     private int setsWonPlayer2 = 0;
     private boolean matchOver = false;
 
-    public MatchScore(String player1Name, String player2Name) {
-        this.player1 = Player.builder().name(player1Name).build();
-        this.player2 = Player.builder().name(player2Name).build();
-        sets.add(new SetScore(player1, player2));
-    }
+//    public MatchScore(String player1Name, String player2Name) {
+//        this.player1 = Player.builder().name(player1Name).build();
+//        this.player2 = Player.builder().name(player2Name).build();
+//        sets.add(new SetScore(player1, player2));
+//    }
 
     public void playPoint(String playerName) {
         if (matchOver) return;
@@ -49,8 +56,13 @@ public class MatchScore {
     }
 
     public String getWinner() {
-        if (!matchOver) return "Матч не завершён";
+       // if (!matchOver) return "Матч не завершён";
         return (setsWonPlayer1 > setsWonPlayer2) ? player1.getName() : player2.getName();
+    }
+
+    public Player getWinnerPlayer() {
+        // if (!matchOver) return "Матч не завершён";
+        return (setsWonPlayer1 > setsWonPlayer2) ? player1 : player2;
     }
 
     public SetScore getCurrentSet() {

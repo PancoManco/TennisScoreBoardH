@@ -18,8 +18,8 @@ public class AppContextListener implements ServletContextListener {
 
         HibernateUtil.initDatabase(); //todo сделать скрипт для добавления данных в базу данных для проверки пагинации
         sce.getServletContext().setAttribute("finishedMatchesPersistenceService", new FinishedMatchesPersistenceService());
-        sce.getServletContext().setAttribute("MatchScoreCalculationService", new MatchScoreCalculationService());
-        sce.getServletContext().setAttribute("NewMatchService", new NewMatchService());
-        sce.getServletContext().setAttribute("OngoingMatchesService", new OngoingMatchesService());
+        sce.getServletContext().setAttribute("matchScoreCalculationService", new MatchScoreCalculationService());
+        sce.getServletContext().setAttribute("newMatchService", new NewMatchService());
+        sce.getServletContext().setAttribute("ongoingMatchesService", new OngoingMatchesService());
     }
 }

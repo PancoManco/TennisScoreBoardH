@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Match;
-import model.MatchScore;
 import service.FinishedMatchesPersistenceService;
 import service.MatchScoreCalculationService;
 import service.OngoingMatchesService;
@@ -16,13 +15,25 @@ import java.util.UUID;
 
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
-    private OngoingMatchesService ongoingMatchesService = new OngoingMatchesService();
-    private MatchScoreCalculationService scoreService = new MatchScoreCalculationService();
+
+    private OngoingMatchesService ongoingMatchesService;
+    private MatchScoreCalculationService matchScoreCalculationService;
+    private FinishedMatchesPersistenceService finishedMatchesPersistenceService;
+    @Override
+    public void init() throws ServletException {
+        this.ongoingMatchesService = (OngoingMatchesService) getServletContext().getAttribute("ongoingMatchesService");
+        this.matchScoreCalculationService = (MatchScoreCalculationService)getServletContext().getAttribute("matchScoreCalculationService");
+        this.finishedMatchesPersistenceService = (FinishedMatchesPersistenceService) getServletContext().getAttribute("finishedMatchesPersistenceService");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         Match match = ongoingMatchesService.getMatch(uuid);
-     //   MatchScore model = match.getMatchScore();
+
+        if (match.getWinner() != null) {
+            ongoingMatchesService.delete(uuid);
+        }
         req.setAttribute("match", match);
         req.setAttribute("uuid", uuid);
         req.setAttribute("matchScore", match.getMatchScore());
@@ -34,10 +45,12 @@ public class MatchScoreServlet extends HttpServlet {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         String player = req.getParameter("winnerId");
         Match match = ongoingMatchesService.getMatch(uuid);
-        scoreService.updatePoints(match, player);
+        matchScoreCalculationService.updatePoints(match, player);
 
-       // FinishedMatchesPersistenceService.persist(match); с проверка на победителя
-
+        if (match.getWinner() != null) {
+          //  MatchDto matchDto = matchDtoMapper.mapFromMatchToDto(match);
+            finishedMatchesPersistenceService.persistMatch(match);
+        }
         resp.sendRedirect("/match-score" + "?uuid=" + uuid);
     }
 }

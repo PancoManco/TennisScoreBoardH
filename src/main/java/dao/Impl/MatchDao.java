@@ -7,7 +7,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 import java.util.List;
+
+import static exception.ErrorMessages.ERROR_FINDING_ALL_MATCHES;
 import static exception.ErrorMessages.ERROR_SAVING_MATCH;
+
 
 public class MatchDao  implements IMatchDao {
     private final static MatchDao INSTANCE = new MatchDao();
@@ -29,7 +32,18 @@ public class MatchDao  implements IMatchDao {
     }
     @Override
     public List<Match> findAll() {
-        return List.of();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            session.beginTransaction();
+            List<Match> matches = session.createQuery("FROM Match", Match.class)
+                    .setFirstResult(1)
+                    .setMaxResults(2)
+                    .list();
+
+            session.getTransaction().commit();
+            return matches;
+        } catch (HibernateException exception) {
+            throw new DataBaseException(ERROR_FINDING_ALL_MATCHES);
+        }
     }
 
     @Override

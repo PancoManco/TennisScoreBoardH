@@ -3,6 +3,8 @@ package service;
 import dao.Impl.MatchDao;
 import model.Match;
 
+import java.util.List;
+
 public class FinishedMatchesPersistenceService {
     private final MatchDao matchDao = MatchDao.getInstance();
 
@@ -10,7 +12,7 @@ public class FinishedMatchesPersistenceService {
         matchDao.save(match);
     }
 
-//    public List<Match> getFinishedMatches() {
-//
-//    }
+    public List<Match> getFinishedMatches() {
+    return matchDao.findAll();
+   }
 }

@@ -18,8 +18,16 @@ import static utils.RequestParameterUtil.validateParameters;
 
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
-    NewMatchService newMatchService = new NewMatchService();
-    OngoingMatchesService ongoingMatchesService = new OngoingMatchesService();
+    NewMatchService newMatchService ;
+    OngoingMatchesService ongoingMatchesService ;
+
+    @Override
+    public void init() throws ServletException {
+        this.newMatchService = (NewMatchService) getServletContext().getAttribute("newMatchService");
+        this.ongoingMatchesService = (OngoingMatchesService) getServletContext().getAttribute("ongoingMatchesService");
+    }
+
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

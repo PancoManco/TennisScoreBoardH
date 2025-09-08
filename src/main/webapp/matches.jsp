@@ -26,8 +26,8 @@
             <ul class="matches-list">
                 <c:forEach var="match" items="${matches}">
                     <li>
-                            ${match.player1.name} vs ${match.player2.name} —
-                        Победитель: ${match.winner.name}
+                            ${match.getPlayer1().getName()} vs ${match.getPlayer2().getName()} —
+                        Победитель: ${match.getWinner().getName()}
                     </li>
                 </c:forEach>
             </ul>
