@@ -34,13 +34,22 @@
 
             <!-- Пагинация -->
             <div class="pagination">
-                <c:if test="${currentPage > 1}">
-                    <a href="?page=${currentPage - 1}&filter_by_player_name=${param.filter_by_player_name}">← Назад</a>
+                <c:if test="${requestScope.pageNumber != 1 && empty requestScope.filterName}">
+                    <a class="prev" href="${pageContext.request.contextPath}/matches?page=${ requestScope.pageNumber - 1}"> < </a>
+
                 </c:if>
-                <span>Страница ${currentPage}</span>
-                <c:if test="${not lastPage}">
-                    <a href="?page=${currentPage + 1}&filter_by_player_name=${param.filter_by_player_name}">Вперёд →</a>
+                <c:if test="${requestScope.pageNumber != 1 && not empty requestScope.filterName}">
+                    <a class="prev" href="${pageContext.request.contextPath}/matches?page=${ requestScope.pageNumber - 1}&filter_by_player_name=${requestScope.filterName}"> < </a>
                 </c:if>
+
+                <c:if test="${requestScope.matches.size() == requestScope.pageSize && empty requestScope.filterName}">
+                    <a class="next" href="${pageContext.request.contextPath}/matches?page=${requestScope.pageNumber >= requestScope.amountPages ? requestScope.amountPages : requestScope.pageNumber + 1}"> > </a>
+
+                </c:if>
+                <c:if test="${requestScope.matches.size() == requestScope.pageSize && not empty requestScope.filterName}">
+                    <a class="next" href="${pageContext.request.contextPath}/matches?page=${requestScope.pageNumber >= requestScope.amountPages ? requestScope.amountPages : requestScope.pageNumber + 1}&filter_by_player_name=${requestScope.filterName}"> > </a>
+                </c:if>
+
             </div>
         </c:otherwise>
     </c:choose>

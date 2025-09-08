@@ -12,7 +12,11 @@ public class FinishedMatchesPersistenceService {
         matchDao.save(match);
     }
 
-    public List<Match> getFinishedMatches() {
-    return matchDao.findAll();
+    public List<Match> getFinishedMatches(int pageNumber, String playerName, int pageSize) {
+        int offset = (pageNumber - 1) * pageSize;
+        if (playerName == null) {
+            return matchDao.findAll(offset, pageSize);
+        }
+        return matchDao.findByPlayerNamePaginated(offset, pageSize, playerName);
    }
 }

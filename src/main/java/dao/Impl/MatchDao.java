@@ -31,14 +31,13 @@ public class MatchDao  implements IMatchDao {
         }
     }
     @Override
-    public List<Match> findAll() {
+    public List<Match> findAll(int offset, int pageSize) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
             List<Match> matches = session.createQuery("FROM Match", Match.class)
-                    .setFirstResult(1)
-                    .setMaxResults(2)
+                    .setFirstResult(offset)
+                    .setMaxResults(pageSize)
                     .list();
-
             session.getTransaction().commit();
             return matches;
         } catch (HibernateException exception) {
@@ -47,7 +46,21 @@ public class MatchDao  implements IMatchDao {
     }
 
     @Override
-    public List<Match> findByPlayerName() {
-        return List.of();
+    public List<Match> findByPlayerNamePaginated(int offset, int pageSize, String playerName) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            session.beginTransaction();
+            String nameForQuery = "%" + playerName + "%";
+            List<Match> matches = session.createQuery("FROM Match where player1.name ILIKE :name or player2.name ILIKE :name", Match.class)
+                    .setParameter("name", nameForQuery)
+                    .setFirstResult(offset)
+                    .setMaxResults(pageSize)
+                    .list();
+            session.getTransaction().commit();
+            return matches;
+        } catch (HibernateException exception) {
+            throw new DataBaseException("Database error");
+        }
+
+
     }
 }
