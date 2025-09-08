@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -34,18 +35,20 @@
         </tr>
         </tbody>
     </table>
-
-    <c:if test="${matchScore.isMatchOver()}">
-        <p><strong>Матч завершен!</strong></p>
+    <c:if test="${requestScope.matchScore.isMatchOver() and not empty requestScope.matchScore.getWinner()}">
+        <h1><strong>Матч завершён!</strong></h1>
+        <h2>Победитель матча: ${requestScope.matchScore.winner}</h2>
     </c:if>
+
 
     <form action="${pageContext.request.contextPath}/match-score?uuid=${uuid}" method="post">
         <input type="hidden" name="uuid" value="${param.uuid}">
-        <button type="submit" name="winnerId" value=${matchScore.getPlayer1().getName()}>Игрок 1 выиграл очко</button>
-        <button type="submit" name="winnerId" value=${matchScore.getPlayer2().getName()}>Игрок 2 выиграл очко</button>
+        <button type="submit" name="winnerId" value=${matchScore.getPlayer1().getName()}>Игрок ${matchScore.getPlayer1().getName()} выиграл очко</button>
+        <button type="submit" name="winnerId" value=${matchScore.getPlayer2().getName()}>Игрок ${matchScore.getPlayer2().getName()} выиграл очко</button>
     </form>
 
     <a href="${pageContext.request.contextPath}/">← На главную</a>
 </div>
+
 </body>
 </html>

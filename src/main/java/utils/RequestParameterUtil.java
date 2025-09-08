@@ -11,6 +11,8 @@ import static exception.ErrorMessages.*;
 @UtilityClass
 public class RequestParameterUtil {
     public static void validateParameters( String parameter1, String parameter2) {
+        parameter1 = parameter1.trim();
+        parameter2 = parameter2.trim();
         if (parameter1 == null || parameter1.isBlank() || parameter2 == null || parameter2.isBlank()) {
             throw new InvalidParameterException(REQUIRED_FORM_FIELD_MISSING);
         }

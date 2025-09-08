@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -20,7 +21,12 @@
         </div>
         <button type="submit">Начать</button>
     </form>
+    <!-- Блок для отображения ошибки -->
+    <c:if test="${not empty requestScope.errorMessage}">
+        <div style="color: red; font-weight: bold; margin-bottom: 1em;">Ошибка: ${requestScope.errorMessage}</div>
+    </c:if>
     <a href="${pageContext.request.contextPath}/">← На главную</a>
 </div>
+
 </body>
 </html>
