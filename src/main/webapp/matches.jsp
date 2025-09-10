@@ -11,13 +11,13 @@
 
 <h2>Список матчей</h2>
 
-<!-- Форма фильтрации -->
+
 <form class="filter-form" method="get" action="matches">
     <input type="text" name="filter_by_player_name" placeholder="Фильтр по имени игрока" value="${filterName != null ? filterName : ''}" />
     <button type="submit">Фильтровать</button>
 </form>
 
-<!-- Таблица матчей -->
+
 <table>
     <thead>
     <tr>
@@ -61,19 +61,19 @@
 <c:set var="startPage" value="${currentPage - maxSideLinks}" />
 <c:set var="endPage" value="${currentPage + maxSideLinks}" />
 
-<!-- Если startPage < 1, сдвигаем диапазон вправо -->
+
 <c:if test="${startPage < 1}">
     <c:set var="endPage" value="${endPage + (1 - startPage)}" />
     <c:set var="startPage" value="1" />
 </c:if>
 
-<!-- Если endPage > totalPages, сдвигаем диапазон влево -->
+
 <c:if test="${endPage > totalPages}">
     <c:set var="startPage" value="${startPage - (endPage - totalPages)}" />
     <c:set var="endPage" value="${totalPages}" />
 </c:if>
 
-<!-- Коррекция на случай, если startPage стал меньше 1 после сдвига -->
+
 <c:if test="${startPage < 1}">
     <c:set var="startPage" value="1" />
 </c:if>
@@ -98,7 +98,7 @@
         <a href="matches?page=${currentPage + 1}&filter_by_player_name=${filterName}">Вперёд →</a>
     </c:if>
 
-    <!-- Форма для ввода номера страницы -->
+
     <form action="matches" method="get" style="display: inline-block; margin-left: 15px;">
         <input
                 type="number"

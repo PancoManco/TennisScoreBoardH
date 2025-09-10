@@ -9,4 +9,5 @@ public interface IMatchDao {
     List<Match> findAll(int offset, int pageSize);
     List<Match> findByPlayerNamePaginated(int offset, int pageSize, String playerName);
     long countAll();
+    long countByPlayerName(String playerName);
 }

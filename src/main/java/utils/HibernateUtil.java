@@ -16,11 +16,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+import static exception.ErrorMessages.ERROR_FINDING_SQL_FILE;
+import static exception.ErrorMessages.ERROR_INIT_DATABASE_FOR_PAGINATION;
+
 @Slf4j
 @UtilityClass
 public class HibernateUtil {
     @Getter
     private static final SessionFactory sessionFactory = buildSessionFactory();
+
     private static SessionFactory buildSessionFactory() {
         try {
             log.debug("Building Hibernate SessionFactory");
@@ -40,6 +44,7 @@ public class HibernateUtil {
     }
 
     public static void initDatabase() {
+        log.debug("Initializing database");
         try (InputStream resource = HibernateUtil.class.getClassLoader().getResourceAsStream("someDataForPagination.sql");
         Session session = sessionFactory.openSession()
         ) {
@@ -48,11 +53,14 @@ public class HibernateUtil {
             session.beginTransaction();
             session.createNativeQuery(sql).executeUpdate();
             session.getTransaction().commit();
-        } catch (HibernateException exception) {
-            throw new DataBaseException("Database error");
+            log.info("Database initialized");
+        } catch (HibernateException e) {
+            log.error(ERROR_INIT_DATABASE_FOR_PAGINATION, e);
+            throw new DataBaseException(ERROR_INIT_DATABASE_FOR_PAGINATION);
         }
-        catch (IOException exception) {
-            throw new NotFoundException("sql data is not found");
+        catch (IOException e) {
+            log.error(ERROR_FINDING_SQL_FILE, e);
+            throw new NotFoundException(ERROR_FINDING_SQL_FILE);
         }
     }
 }

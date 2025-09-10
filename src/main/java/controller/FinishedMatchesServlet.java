@@ -1,22 +1,21 @@
 package controller;
 
+import dto.MatchDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Match;
 import service.FinishedMatchesPersistenceService;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.InvalidParameterException;
 import java.util.List;
 
 @WebServlet("/matches")
 public class FinishedMatchesServlet extends HttpServlet {
-    private FinishedMatchesPersistenceService finishedMatchesPersistenceService;
     public static final int PAGE_SIZE_BY_DEFAULT = 5;
+    private FinishedMatchesPersistenceService finishedMatchesPersistenceService;
+
     @Override
     public void init() throws ServletException {
         this.finishedMatchesPersistenceService = (FinishedMatchesPersistenceService) getServletContext().getAttribute("finishedMatchesPersistenceService");
@@ -30,10 +29,10 @@ public class FinishedMatchesServlet extends HttpServlet {
         try {
             pageNumber = (page == null || page.isEmpty()) ? 1 : Integer.parseInt(page);
         } catch (NumberFormatException exception) {
-            pageNumber = 1; // или можно показать ошибку пользователю, но не выбрасывать исключение
+            pageNumber = 1;
         }
-
-        List<Match> matches = finishedMatchesPersistenceService.getFinishedMatches(pageNumber, playerName, PAGE_SIZE_BY_DEFAULT);
+        //List<Match> matches = finishedMatchesPersistenceService.getFinishedMatches(pageNumber, playerName, PAGE_SIZE_BY_DEFAULT);
+        List<MatchDto> matches = finishedMatchesPersistenceService.getFinishedMatches(pageNumber, playerName, PAGE_SIZE_BY_DEFAULT);
         long totalMatches = finishedMatchesPersistenceService.getFinishedMatchesCount(playerName);
         int totalPages = (int) Math.ceil((double) totalMatches / PAGE_SIZE_BY_DEFAULT);
         req.setAttribute("matches", matches);

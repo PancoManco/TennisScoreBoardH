@@ -14,6 +14,11 @@ public class ErrorMessages {
     public static final String ERROR_SAVING_MATCH = "Ошибка при сохранения матча в базу данных";
 
     public static final String MATCH_NOT_FOUND = "Матч не найден по UUID";
-    public static final String SERIALIZATION_ERROR_MESSAGE = "Ошибка при сериализации объекта в JSON.";
     public static final String ERROR_FINDING_ALL_MATCHES = "Ошибка при получения списка всех матчей из базы данных";
+
+    public static final String ERROR_FINDING_BY_NAME_MATCHES = "Ошибка при получения списка всех матчей по имени игрока из базы данных";
+    public static final String ERROR_COUNTING_ALL_MATCHES = "Ошибка при получение количества всех матчей из базы данных";
+    public static final String ERROR_COUNTING_ALL_MATCHES_BY_PLAYER_NAME = "Ошибка при получение количества всех матчей по имени игрока из базы данных";
+    public static final String ERROR_INIT_DATABASE_FOR_PAGINATION= "Ошибка при сохранении первоначальных данных для пагинации в базу данных";
+    public static final String ERROR_FINDING_SQL_FILE = "Ошибка при чтение SQL файла";
 }

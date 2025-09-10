@@ -22,7 +22,6 @@
         </div>
         <button type="submit">Начать</button>
     </form>
-    <!-- Блок для отображения ошибки -->
     <c:if test="${not empty requestScope.errorMessage}">
         <div style="color: red; font-weight: bold; margin-bottom: 1em;">Ошибка: ${requestScope.errorMessage}</div>
     </c:if>

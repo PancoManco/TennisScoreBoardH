@@ -1,10 +1,12 @@
 package controller;
 
+import dto.MatchDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import mapper.MatchMapper;
 import model.Match;
 import service.FinishedMatchesPersistenceService;
 import service.MatchScoreCalculationService;
@@ -16,14 +18,17 @@ import java.util.UUID;
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
 
+    MatchMapper matchMapper;
     private OngoingMatchesService ongoingMatchesService;
     private MatchScoreCalculationService matchScoreCalculationService;
     private FinishedMatchesPersistenceService finishedMatchesPersistenceService;
+
     @Override
     public void init() throws ServletException {
         this.ongoingMatchesService = (OngoingMatchesService) getServletContext().getAttribute("ongoingMatchesService");
-        this.matchScoreCalculationService = (MatchScoreCalculationService)getServletContext().getAttribute("matchScoreCalculationService");
+        this.matchScoreCalculationService = (MatchScoreCalculationService) getServletContext().getAttribute("matchScoreCalculationService");
         this.finishedMatchesPersistenceService = (FinishedMatchesPersistenceService) getServletContext().getAttribute("finishedMatchesPersistenceService");
+        this.matchMapper = (MatchMapper) getServletContext().getAttribute("matchMapper");
     }
 
     @Override
@@ -41,16 +46,23 @@ public class MatchScoreServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         String player = req.getParameter("winnerId");
         Match match = ongoingMatchesService.getMatch(uuid);
         matchScoreCalculationService.updatePoints(match, player);
 
         if (match.getWinner() != null) {
-          //  MatchDto matchDto = matchDtoMapper.mapFromMatchToDto(match);
-            finishedMatchesPersistenceService.persistMatch(match);
+            MatchDto matchDto = matchMapper.toDTO(match);
+            finishedMatchesPersistenceService.persistMatch(matchDto);
         }
+//
+//        if (match.getWinner() != null) {
+//        //    MatchDto matchDto = matchMapper.toDTO(match);
+//            finishedMatchesPersistenceService.persistMatch(matchDto);
+//        }
+
+
         resp.sendRedirect("/match-score" + "?uuid=" + uuid);
     }
 }

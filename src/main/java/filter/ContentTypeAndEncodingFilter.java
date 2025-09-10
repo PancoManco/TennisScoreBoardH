@@ -18,7 +18,6 @@ public class ContentTypeAndEncodingFilter extends HttpFilter {
         public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
             req.setCharacterEncoding("UTF-8"); // Устанавливаем кодировку запросов
             res.setCharacterEncoding("UTF-8"); // Устанавливаем кодировку ответов
-            //  res.setContentType("text/html; charset=utf-8"); // Меняем тип контента на text/html
             chain.doFilter(req, res);
         }
 

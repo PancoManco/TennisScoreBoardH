@@ -1,16 +1,15 @@
 package utils;
 
 import lombok.experimental.UtilityClass;
-import model.Match;
 
 import java.security.InvalidParameterException;
-import java.util.UUID;
 
 import static exception.ErrorMessages.*;
 
+
 @UtilityClass
 public class RequestParameterUtil {
-    public static void validateParameters( String parameter1, String parameter2) {
+    public static void validateParameters(String parameter1, String parameter2) {
         parameter1 = parameter1.trim();
         parameter2 = parameter2.trim();
         if (parameter1 == null || parameter1.isBlank() || parameter2 == null || parameter2.isBlank()) {
@@ -26,7 +25,4 @@ public class RequestParameterUtil {
             throw new InvalidParameterException(PLAYERS_NAMES_LENGTH);
         }
     }
-
-
-
 }

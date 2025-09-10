@@ -7,12 +7,17 @@
   <name>Archetype - TennisScoreBoardH</name>
   <url>http://maven.apache.org</url>
   <packaging>war</packaging>
+  <properties>
+
+    <org.mapstruct.version>1.6.3</org.mapstruct.version>
+
+  </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.38</version>
+      <version>1.18.40</version>
     </dependency>
 
     <dependency>
@@ -87,7 +92,7 @@
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
-      <version>1.6.3</version>
+      <version>${org.mapstruct.version}</version>
     </dependency>
 
     <!-- Процессор аннотаций (для генерации кода на этапе компиляции) -->
@@ -95,7 +100,15 @@
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct-processor</artifactId>
-      <version>1.6.3</version>
+      <version>${org.mapstruct.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok-mapstruct-binding</artifactId>
+      <version>0.2.0</version>
     </dependency>
 
   </dependencies>
@@ -117,13 +130,17 @@
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>1.18.38</version>
+              <version>1.18.40</version>
             </path>
-
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>0.2.0</version>
+            </path>
             <path>
               <groupId>org.mapstruct</groupId>
               <artifactId>mapstruct-processor</artifactId>
-              <version>1.5.5.Final</version>
+              <version>${org.mapstruct.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
