@@ -1,6 +1,7 @@
 package controller;
 
 import dto.MatchDto;
+import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import service.MatchScoreCalculationService;
 import service.OngoingMatchesService;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @WebServlet("/match-score")
@@ -36,6 +38,7 @@ public class MatchScoreServlet extends HttpServlet {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         Match match = ongoingMatchesService.getMatch(uuid);
 
+
         if (match.getWinner() != null) {
             ongoingMatchesService.delete(uuid);
         }
@@ -50,12 +53,15 @@ public class MatchScoreServlet extends HttpServlet {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         String player = req.getParameter("winnerId");
         Match match = ongoingMatchesService.getMatch(uuid);
+
+
         matchScoreCalculationService.updatePoints(match, player);
 
         if (match.getWinner() != null) {
             MatchDto matchDto = matchMapper.toDTO(match);
             finishedMatchesPersistenceService.persistMatch(matchDto);
         }
-        resp.sendRedirect("/match-score" + "?uuid=" + uuid);
+        resp.sendRedirect("/match-score?uuid=" + uuid);
     }
+
 }

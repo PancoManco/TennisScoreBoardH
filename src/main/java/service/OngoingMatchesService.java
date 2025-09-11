@@ -14,8 +14,11 @@ import static exception.ErrorMessages.MATCH_NOT_FOUND;
 
 public class OngoingMatchesService {
 
-    private final static Map<UUID, Match> ongoingMatches = new ConcurrentHashMap<>();
+    private final Map<UUID, Match> ongoingMatches;
 
+    public OngoingMatchesService() {
+        this.ongoingMatches = new ConcurrentHashMap<>();
+    }
     public UUID add(Match match) {
         UUID uuid = UUID.randomUUID();
         ongoingMatches.put(uuid, match);
@@ -25,6 +28,7 @@ public class OngoingMatchesService {
         return Optional.ofNullable(ongoingMatches.get(uuid))
                 .orElseThrow(() -> new NotFoundException(MATCH_NOT_FOUND));
     }
+
     public void delete(UUID uuid) {
         ongoingMatches.remove(uuid);
     }

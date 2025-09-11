@@ -43,6 +43,17 @@ public class HibernateUtil {
         getSessionFactory().close();
     }
 
+    public static boolean isSessionFactoryOpen() {
+        return sessionFactory != null && !sessionFactory.isClosed();
+    }
+
+    public static synchronized void close() {
+        if (isSessionFactoryOpen()) {
+            log.info("Closing Hibernate SessionFactory");
+            sessionFactory.close();
+        }
+    }
+
     public static void initDatabase() {
         log.debug("Initializing database");
         try (InputStream resource = HibernateUtil.class.getClassLoader().getResourceAsStream("someDataForPagination.sql");

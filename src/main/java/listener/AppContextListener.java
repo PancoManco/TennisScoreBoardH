@@ -14,8 +14,6 @@ import utils.HibernateUtil;
 @Slf4j
 @WebListener
 public class AppContextListener implements ServletContextListener {
-
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         log.info("contextInitialized");
@@ -26,5 +24,18 @@ public class AppContextListener implements ServletContextListener {
         sce.getServletContext().setAttribute("newMatchService", new NewMatchService());
         sce.getServletContext().setAttribute("ongoingMatchesService", new OngoingMatchesService());
         sce.getServletContext().setAttribute("matchMapper", matchMapper);
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        log.info("Shutting down services...");
+        try {
+            if (HibernateUtil.isSessionFactoryOpen()) {
+                HibernateUtil.close();
+            }
+        } catch (Exception e) {
+            log.error("Failed to clean up resources properly", e);
+        }
+        log.info("Application shut down successfully.");
     }
 }

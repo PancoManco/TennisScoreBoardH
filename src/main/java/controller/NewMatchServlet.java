@@ -43,6 +43,5 @@ public class NewMatchServlet extends HttpServlet {
         Match match = matchMapper.toEntity(matchDto);
         UUID matchId = ongoingMatchesService.add(match);
         resp.sendRedirect("/match-score?uuid=" + matchId);
-
     }
 }
