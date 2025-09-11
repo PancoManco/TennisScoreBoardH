@@ -16,23 +16,6 @@ public class SetScore {
         this.currentGame = new GameScore(player1, player2);
     }
 
-    //    public void playPoint(Player scorer, Player opponent) {
-//        if (isTieBreak()) {
-//            if (tieBreakGame == null) tieBreakGame = new TieBreakGame(player1, player2);
-//            tieBreakGame.playPoint(scorer);
-//            if (tieBreakGame.isGameOver()) {
-//                if (scorer == player1) gamesPlayer1++;
-//                else gamesPlayer2++;
-//            }
-//        } else {
-//            currentGame.playPoint(scorer, opponent);
-//            if (currentGame.isGameOver()) {
-//                if (scorer == player1) gamesPlayer1++;
-//                else gamesPlayer2++;
-//                currentGame = new GameScore(player1, player2);
-//            }
-//        }
-//    }
     public void playPoint(Player scorer, Player opponent) {
         if (isTieBreak()) {
             playTieBreakPoint(scorer);
@@ -90,21 +73,4 @@ public class SetScore {
         return currentGame.getScore(player);
     }
 
-//    public boolean isSetOver() {
-//        return (gamesPlayer1 >= 6 || gamesPlayer2 >= 6) &&
-//                Math.abs(gamesPlayer1 - gamesPlayer2) >= 2 || (gamesPlayer1 == 7 || gamesPlayer2 == 7);
-//    }
-//
-//    private boolean isTieBreak() {
-//        return gamesPlayer1 == 6 && gamesPlayer2 == 6;
-//    }
-//
-//    public int getGames(Player player) {
-//        return player == player1 ? gamesPlayer1 : gamesPlayer2;
-//    }
-//
-//    public String getCurrentGameScore(Player player) {
-//        if (tieBreakGame != null) return tieBreakGame.getScore(player);
-//        return currentGame.getScore(player);
-//    }
 }

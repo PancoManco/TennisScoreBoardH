@@ -29,18 +29,6 @@ public class MatchScore {
         Player opponent = (scorer == player1) ? player2 : player1;
         SetScore currentSet = getCurrentSet();
         currentSet.playPoint(scorer, opponent);
-
-        /*
-        if (currentSet.isSetOver()) {
-            if (currentSet.getGames(player1) > currentSet.getGames(player2)) setsWonPlayer1++;
-            else setsWonPlayer2++;
-
-            if (setsWonPlayer1 == 2 || setsWonPlayer2 == 2) {
-                matchOver = true;
-            } else {
-                sets.add(new SetScore(player1, player2));
-            }
-        }*/
         if (currentSet.isSetOver()) {
             updateSetsWon(currentSet);
             if (isMatchWon()) {
@@ -54,31 +42,22 @@ public class MatchScore {
         if (set.getGames(player1) > set.getGames(player2)) setsWonPlayer1++;
         else setsWonPlayer2++;
     }
-
     private boolean isMatchWon() {
-
         return setsWonPlayer1 == SETS_TO_WIN || setsWonPlayer2 == SETS_TO_WIN;
     }
-
-
     public boolean isMatchOver() {
         return matchOver;
     }
 
     public String getWinner() {
-       // if (!matchOver) return "Матч не завершён";
         return (setsWonPlayer1 > setsWonPlayer2) ? player1.getName() : player2.getName();
     }
-
     public Player getWinnerPlayer() {
-        // if (!matchOver) return "Матч не завершён";
         return (setsWonPlayer1 > setsWonPlayer2) ? player1 : player2;
     }
-
     public SetScore getCurrentSet() {
         return sets.get(sets.size() - 1);
     }
-
     private Player getPlayerByName(String name) {
         if (player1.getName().equalsIgnoreCase(name)) return player1;
         return player2;

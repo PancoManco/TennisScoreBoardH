@@ -8,18 +8,14 @@
   <url>http://maven.apache.org</url>
   <packaging>war</packaging>
   <properties>
-
     <org.mapstruct.version>1.6.3</org.mapstruct.version>
-
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.40</version>
     </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -31,7 +27,6 @@
       <version>6.1.0</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
@@ -42,13 +37,11 @@
       <artifactId>hibernate-core</artifactId>
       <version>6.6.26.Final</version>
     </dependency>
-
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>2.0.17</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
@@ -60,43 +53,37 @@
       <version>5.13.4</version>
       <scope>test</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>5.13.4</version>
       <scope>test</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.7.7</version>
     </dependency>
-    <!-- Jakarta JSTL -->
+
     <dependency>
       <groupId>org.glassfish.web</groupId>
       <artifactId>jakarta.servlet.jsp.jstl</artifactId>
       <version>2.0.0</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-hikaricp -->
     <dependency>
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-hikaricp</artifactId>
       <version>7.1.0.Final</version>
     </dependency>
 
-    <!-- Зависимость MapStruct -->
-    <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
       <version>${org.mapstruct.version}</version>
     </dependency>
 
-    <!-- Процессор аннотаций (для генерации кода на этапе компиляции) -->
-    <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct-processor</artifactId>
@@ -104,7 +91,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding -->
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok-mapstruct-binding</artifactId>
@@ -113,19 +100,15 @@
 
   </dependencies>
 
-
-
-
   <build>
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.5.1</version>
         <configuration>
-          <source>23</source> <!-- depending on your project -->
-          <target>23</target> <!-- depending on your project -->
+          <source>23</source>
+          <target>23</target>
           <annotationProcessorPaths>
             <path>
               <groupId>org.projectlombok</groupId>
@@ -145,12 +128,7 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
-
       <!-- ... -->
-
     </plugins>
   </build>
-
-
-
 </project>

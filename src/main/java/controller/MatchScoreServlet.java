@@ -56,13 +56,6 @@ public class MatchScoreServlet extends HttpServlet {
             MatchDto matchDto = matchMapper.toDTO(match);
             finishedMatchesPersistenceService.persistMatch(matchDto);
         }
-//
-//        if (match.getWinner() != null) {
-//        //    MatchDto matchDto = matchMapper.toDTO(match);
-//            finishedMatchesPersistenceService.persistMatch(matchDto);
-//        }
-
-
         resp.sendRedirect("/match-score" + "?uuid=" + uuid);
     }
 }

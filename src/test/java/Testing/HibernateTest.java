@@ -5,7 +5,6 @@ import utils.HibernateUtil;
 
 public class HibernateTest {
 
-
     public void checkH2() {
         @Cleanup var sessionFactory = HibernateUtil.getSessionFactory();
         @Cleanup var session = sessionFactory.openSession();

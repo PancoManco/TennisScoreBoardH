@@ -9,6 +9,7 @@ import service.FinishedMatchesPersistenceService;
 import service.MatchScoreCalculationService;
 import service.NewMatchService;
 import service.OngoingMatchesService;
+import utils.HibernateUtil;
 
 @Slf4j
 @WebListener
@@ -19,7 +20,7 @@ public class AppContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         log.info("contextInitialized");
         MatchMapper matchMapper = MatchMapper.INSTANCE;
-        //  HibernateUtil.initDatabase();
+        HibernateUtil.initDatabase();
         sce.getServletContext().setAttribute("finishedMatchesPersistenceService", new FinishedMatchesPersistenceService());
         sce.getServletContext().setAttribute("matchScoreCalculationService", new MatchScoreCalculationService());
         sce.getServletContext().setAttribute("newMatchService", new NewMatchService());

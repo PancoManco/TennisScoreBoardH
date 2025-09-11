@@ -39,13 +39,8 @@ public class NewMatchServlet extends HttpServlet {
         String name1 = req.getParameter("player1");
         String name2 = req.getParameter("player2");
         validateParameters(name1, name2);
-
-        // test dto
         MatchDto matchDto = newMatchService.createNewMatch(name1, name2);
         Match match = matchMapper.toEntity(matchDto);
-        // test dto
-
-        //  Match match = newMatchService.createNewMatch(name1,name2);
         UUID matchId = ongoingMatchesService.add(match);
         resp.sendRedirect("/match-score?uuid=" + matchId);
 

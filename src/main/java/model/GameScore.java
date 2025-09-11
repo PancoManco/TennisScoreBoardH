@@ -16,18 +16,14 @@ public class GameScore {
     public void playPoint(Player scorer, Player opponent) {
         if (isDeuce()) {
             if (hasAdvantage(scorer)) {
-                // Победа после преимущества
                 reset();
                 scorerWinsGame = scorer;
             } else if (hasAdvantage(opponent)) {
-                // Снятие преимущества у соперника
                 removeAdvantage(opponent);
             } else {
-                // Получение преимущества
                 giveAdvantage(scorer);
             }
         } else if (hasAdvantage(scorer)) {
-            // Победа после преимущества
             reset();
             scorerWinsGame = scorer;
         } else {

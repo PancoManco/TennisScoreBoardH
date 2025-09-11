@@ -31,7 +31,6 @@ public class FinishedMatchesServlet extends HttpServlet {
         } catch (NumberFormatException exception) {
             pageNumber = 1;
         }
-        //List<Match> matches = finishedMatchesPersistenceService.getFinishedMatches(pageNumber, playerName, PAGE_SIZE_BY_DEFAULT);
         List<MatchDto> matches = finishedMatchesPersistenceService.getFinishedMatches(pageNumber, playerName, PAGE_SIZE_BY_DEFAULT);
         long totalMatches = finishedMatchesPersistenceService.getFinishedMatchesCount(playerName);
         int totalPages = (int) Math.ceil((double) totalMatches / PAGE_SIZE_BY_DEFAULT);
